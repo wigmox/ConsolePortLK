@@ -93,3 +93,8 @@ ConsolePort relies mostly on [RestrictedEnvironment](https://wowwiki-archive.fan
 ConsolePortLK has only been made taking in consideration default WoW API for 3.3.5a, if you are trying to use this AddOn in a heavily modded client it may work, but you can't be surprised if it doesn't since it relies heavily on sensitive secure APIs, changes in these might break everything.<br/><br/>
 
 If somehow it doesn't work for you in a customized client, don't expect fast changes in this AddOn just to support it unless someone with enough interest send pull requests fixing these issues when they happen, because customized clients can be a moving target and may get new modifications that break old stuff.
+
+### I am unable to find the configuration profile in Steam ###
+Due to how non-steam games are added it may be difficult to find a proper configuration for this plugin.  
+Create a new configuration and set the keys to the following:
+<img width="1275" height="680" alt="image" src="https://github.com/user-attachments/assets/4d0e2ea8-a0e2-4b9f-9665-a74579e94944" />
