@@ -359,6 +359,20 @@ function ConsolePort:LoadRaidCursor()
 	Cursor:SetAttribute('modifier', db.Settings.raidCursorModifier or '')
 end
 
+local function RestoreRaidCursorBindings()
+	if not InCombatLockdown() then
+		local isEnabled = Cursor:GetAttribute('enabled')
+		if isEnabled then
+			local Pager = ConsolePort:GetPager()
+			if Pager then
+				Pager:RunFor(Cursor, Cursor:GetAttribute('ToggleCursor'))
+			end
+		end
+	end
+end
+
+ConsolePort:RegisterCallback('OnNewBindings', RestoreRaidCursorBindings)
+
 --------------------------------------------------------------
 Cursor.ScaleUp = Cursor.Group.ScaleUp
 Cursor.ScaleDown = Cursor.Group.ScaleDown
