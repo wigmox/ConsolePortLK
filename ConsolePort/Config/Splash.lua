@@ -634,7 +634,7 @@ function ConsolePort:SelectController()
 			db('newController', true)
 			db('forceController', self.ID)
 	
-			PlaySound(CPAPI.GetSound("GS_CHARACTER_SELECTION_ENTER_WORLD"))
+			PlaySound("gsTitleOptionExit")
 			ReloadUI()
 		end
 	
@@ -690,7 +690,18 @@ function ConsolePort:SelectController()
 		Splash:SetPoint("CENTER", 0, 0)
 		Splash:SetSize(totalWidth + 150, totalHeight + 80)
 		Splash:EnableMouse(true)
-		Splash:SetScript("OnShow", MouselookStop)
+		Splash:SetScript("OnShow", function(self)
+			MouselookStop()
+			-- Enter key debounce: prevent slash command Enter from auto-selecting first controller
+			for _, controller in pairs(self.Controllers) do
+				controller:Disable()
+			end
+			CPAPI.TimerAfter(0.2, function()
+				for _, controller in pairs(self.Controllers) do
+					controller:Enable()
+				end
+			end)
+		end)
 		Splash:Hide()
 		Splash:Show()
 	end

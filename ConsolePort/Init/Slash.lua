@@ -38,7 +38,7 @@ function ConsolePort:CreateSlashHandler()
 			db('newController', true)
 			db('forceController', controller)
 
-			PlaySound(SOUNDKIT.GS_CHARACTER_SELECTION_ENTER_WORLD)
+			PlaySound("gsTitleOptionExit")
 			ReloadUI()
 		else
 			ConsolePort:SelectController()
