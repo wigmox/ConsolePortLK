@@ -4,7 +4,7 @@
 -- Encodes player state into pixels for external reading with WoWpadX.
 
 local _, db = ...
-local Bridge = CreateFrame('Frame', 'ConsolePortPixelBridge', UIParent)
+local Bridge = CreateFrame('Frame', 'ConsolePortPixelBridge', WorldFrame)
 
 -- Pixel Bridge Configuration
 local PIXEL_SIZE  = 4 -- We use 8x8 blocks as established for reliability
