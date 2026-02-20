@@ -201,13 +201,28 @@ local Menu =  UI:CreateFrame('Frame', an, IsCustomClient and EscapeMenu or GameM
 					Img 	= [[Interface\Spellbook\Spellbook-Icon]],
 					RefTo 	= SpellbookMicroButton,
 					Attrib 	= {hidemenu = true},
-				},
-				Collections  = {
+				}, 
+				Totem  = {
 					Type 	= 'Button',
 					Setup 	= baseTemplates,
 					Mixin 	= Button,
 					ID 		= 5,
 					Point 	= {'TOP', 'parent.Spellbook', 'BOTTOM', 0, 0},
+					Desc	= db.CUSTOMBINDS.CP_TOTEMFRAME,
+					Img 	= [[Interface\Icons\Spell_Shaman_TotemRecall]],
+					OnLoadHook = function(self) SetPortraitToTexture(self.Icon, ICON:format('Spell_Shaman_TotemRecall')) end,
+					RefTo 	= ConsolePortTotemToggle,
+					Attrib 	= {
+						hidemenu = true, 
+						condition = string.format('return %s', tostring(select(2, UnitClass("player")) == "SHAMAN"))
+					},
+				},
+				Collections  = {
+					Type 	= 'Button',
+					Setup 	= baseTemplates,
+					Mixin 	= Button,
+					ID 		= 6,
+					Point 	= {'TOP', select(2, UnitClass("player")) == "SHAMAN" and 'parent.Totem' or 'parent.Spellbook', 'BOTTOM', 0, 0},
 					Desc	= MOUNTS.." & "..PETS,
 					Img 	= [[Interface\ICONS\Ability_Mount_BigBlizzardBear]], 
 					Attrib 	= {hidemenu = true},	

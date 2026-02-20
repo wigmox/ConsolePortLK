@@ -134,6 +134,7 @@ TUTORIAL = {
 		AUTOLOOT 			= 'Force auto loot in combat',
 		AUTOSELL 			= 'Automatically sell junk',
 		DISABLEBINDHELP 	= 'Disable action placement assistance',
+		ENABLEPIXELBRIDGE 	= 'Enable Pixel Bridge (experimental)',
 		FIXES 				= 'Fixes',
 		DISABLEHOLDREPEAT 	= 'One-to-one interface cursor',
 		SKIPCALIBRATION		= 'Disable calibration check on login',
@@ -165,7 +166,7 @@ TUTORIAL = {
 		LEFT 				= 'Left',
 		RIGHT 				= 'Right',
 		-----------------------------------------------------------
-		LINK_WM 			= 'WoWmapperX on GitHub',
+		LINK_WM 			= 'WoWpadX on GitHub',
 		LINK_CP 			= 'ConsolePortLK on GitHub', 
 		LINK_PAYPAL			= 'Paypal donation',
 	},

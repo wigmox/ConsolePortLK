@@ -68,6 +68,10 @@ local function GetAddonSettings()
 			desc = L.DISABLEBINDHELP,
 			state = db('disableSmartBind'),
 		},
+		{	cvar = 'enablePixelBridge',
+			desc = L.ENABLEPIXELBRIDGE,
+			state = db('enablePixelBridge'),
+		},
 		{	desc = L.FIXES },
 		{	cvar = 'UIdisableHoldRepeat',
 			desc = L.DISABLEHOLDREPEAT,
@@ -1026,7 +1030,7 @@ db.PANELS[#db.PANELS + 1] = {name = 'Controls', header = SETTINGS, mixin = Windo
 
 		for i, info in pairs({
 			{'CP', L.LINK_CP, 'https://github.com/leoaviana/ConsolePortLK/'},
-			{'WM', L.LINK_WM, 'https://github.com/leoaviana/WoWmapperX/releases/latest'}, 
+			{'WP', L.LINK_WM, 'https://github.com/leoaviana/WoWpadX/releases/latest'}, 
 			{'PP', L.LINK_PAYPAL, 'https://www.paypal.com/donate/?hosted_button_id=CSQHQU3DNCRYU'},
 		})
 		do

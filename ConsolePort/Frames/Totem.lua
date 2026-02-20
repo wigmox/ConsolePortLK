@@ -64,12 +64,16 @@ local function CreateTotemButton(name, parent, id, checked)
 end
 
 ---
--- FIXME: Secure Button Creation, for now this will still cause UI taint in combat.
+-- FIXME: Secure Button Creation, for now this will still cause UI taint in combat, so we don't allow opening/closing in combat
 --
 
 local totemToggler = CreateFrame("Button", "ConsolePortTotemToggle", UIParent, "SecureActionButtonTemplate")
 totemToggler:SetScript("OnClick", function()
     local manager = ConsolePortTotemManagerFrame
+    if(InCombatLockdown()) then
+        UIErrorsFrame:AddMessage(db.TUTORIAL.SETUP.COMBAT, 1, 0, 0)
+        return
+    end
     if manager:IsShown() then
         manager:Hide()
         PlaySound("igMainMenuOptionCheckBoxOff")
@@ -371,6 +375,17 @@ eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 eventFrame:RegisterEvent("UPDATE_MULTI_CAST_ACTIONBAR")
 eventFrame:RegisterEvent("SPELLS_CHANGED")
 eventFrame:SetScript("OnEvent", OnEvent)
+
+RegisterStateDriver(ConsolePortTotemManagerFrame, "visibility", "[combat] hide; nil")
+RegisterStateDriver(ConsolePortTotemSelectionPanel, "visibility", "[combat] hide; nil")
+
+local combatGuard = CreateFrame("Frame")
+combatGuard:RegisterEvent("PLAYER_REGEN_DISABLED")
+combatGuard:SetScript("OnEvent", function()
+    if CPTM.editingSlot then
+        CPTM.editingSlot = nil
+    end
+end)
 
 ConsolePort:AddFrame(ConsolePortTotemManagerFrame)
 ConsolePort:AddFrame(ConsolePortTotemSelectionPanel)

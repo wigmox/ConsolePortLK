@@ -28,7 +28,6 @@ Help:AddPage('What is not working?', 'Port Specifics', [[<HTML><BODY>
 <br/>
 <p align="left">*   Camera functions: Some camera related stuff won't work on WoTLK, that's because most camera features we're implemented in Legion and there is no known workaround for that.</p><br/>
 <p align="left">*   Highlight Next Target: Not possible because this is also a Legion feature</p><br/>
-<p align="left">*   Interact Button/Interact Lite : Interact button is bugged because of missing functions, so it's disabled (at least for now).</p><br/>
 <p align="left"><a href="website:https://github.com/leoaviana/ConsolePort-WOTLK">|cff69ccf0If you see something else broken, you can report on the github page of this project, click here to obtain a link|r</a></p>
 <br/>
 </BODY></HTML>]])

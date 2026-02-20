@@ -27,6 +27,8 @@ local red, green, blue = db.Atlas.GetCC()
 local colMul = 1 + ( 1 - (( red + green + blue ) / 3) )
 ---------------------------------------------------------------
 
+---------------------------------------------------------------
+
 function Animation:ShowNewAction(actionButton, autoassigned, presetID)
 	-- if an item was auto-assigned, postpone its animation until the current animation has finished
 	if  autoassigned and self.Group:IsPlaying() then
@@ -256,12 +258,14 @@ local DROP_TYPES = {
 	spell = true,
 	macro = true,
 	mount = true,
+	companion = true,
 }
 
 local TEXTURE_GETS = {
 	----------------------------------
 	item   = function(id) if id then return select(10, GetItemInfo(id)), select(12, GetItemInfo(id)) == 12 end end;
 	spell  = function(id) if id then return select(3, GetSpellInfo(id)), nil end end;
+	companion  = function(id) if id then return select(3, GetSpellInfo(id)), nil end end;
 	macro  = function(id) if id then return select(2, GetMacroInfo(id)), nil end end;
 	action = function(id) if id then return GetActionTexture(id) end end;
 	----------------------------------
@@ -334,9 +338,9 @@ function ConsolePortRingButtonMixin:PreClick(button)
 	end
 end
 
-function ConsolePortRingButtonMixin:PostClick(button)
+function ConsolePortRingButtonMixin:PostClick(button) 
 	if DROP_TYPES[GetCursorInfo()] then
-		local cursorType, id,  _, spellID = GetCursorInfo()
+		local cursorType, id, companionType, spellID = GetCursorInfo()
 		local SpellBookFrame = CPAPI.IsCustomClient() and CPAPI.GetCustomFrame("SpellBookFrame") or SpellBookFrame
 		
 		ClearCursor()
@@ -349,8 +353,8 @@ function ConsolePortRingButtonMixin:PostClick(button)
 			local spellName, subSpellName = GetSpellName(id, SpellBookFrame.bookType); 
 			local link = GetSpellLink(spellName, subSpellName);  
 			newValue = select(3, strfind(link, "spell:(%d+)")) 
-		elseif cursorType == "companion" then
-			local _, _, petSpellID = GetCompanionInfo(rwdt, id)  
+		elseif cursorType == "companion" then 
+			local _, _, petSpellID = GetCompanionInfo(companionType, id)  
 			newValue = GetSpellInfo(petSpellID)
 			self:SetAttribute("mountID", petSpellID)
 			cursorType = "spell"
@@ -364,6 +368,8 @@ end
 
 
 function ConsolePortRingButtonMixin:OnAttributeChanged(attribute, detail)
+	if(InCombatLockdown()) then return end
+
     -- only react to attributes that actually represent button content
     if attribute ~= 'type' and attribute ~= 'item' and attribute ~= 'spell'
        and attribute ~= 'macro' and attribute ~= 'action' then
@@ -390,27 +396,40 @@ end
 
 
 function ConsolePortRingButtonMixin:OnTooltipUpdate(elapsed)
-	self.idle = self.idle + elapsed
-	if self.idle > 1 then
-		local action = self:GetAttribute('type')
-		if action == 'item' then
-			self.Tooltip:SetOwner(self, 'ANCHOR_BOTTOM', 0, -16)
-			local _, itemlink = GetItemInfo(self:GetAttribute('cursorID'))
-			self.Tooltip:SetHyperlink(itemlink)
-		elseif action == 'spell' then
-			local id = self:GetAttribute("spell") 
-			if id then
-				Tooltip:SetOwner(self, "ANCHOR_BOTTOM", 0, -16) 
-				if(not self:GetAttribute("mountID")) then
-					local link = GetSpellLink(id)
-					Tooltip:SetHyperlink(link)
-				else 
-					Tooltip:SetHyperlink(string.format("|cff71d5ff|Hspell:%d|h[%s]|h|r", self:GetAttribute("mountID"), id))
-				end
-			end
-		end
-		self:SetScript('OnUpdate', nil)
-	end
+    self.idle = self.idle + elapsed
+    if self.idle > 0.5 then -- Snappier for Steam Deck
+        -- 1. Get the current active ring index
+        local activePresetID = tonumber(self:GetParent():GetAttribute("ActivePreset") or 1)
+        
+        -- 2. Reach directly into the DB for this button's ID
+        local preset = ConsolePortUtility[activePresetID]
+        local info = preset and preset.Data and preset.Data[self:GetID()]
+
+        if info and info.action then
+            self.Tooltip:SetOwner(self, 'ANCHOR_BOTTOM', 0, -16)
+            
+            if info.action == 'item' then
+                local _, itemlink = GetItemInfo(info.value or info.cursorID)
+                if itemlink then self.Tooltip:SetHyperlink(itemlink) end
+                
+            elseif info.action == 'spell' then
+                if info.mountID then
+                    -- Use the specific spell link for mounts
+                    self.Tooltip:SetHyperlink(string.format("|cff71d5ff|Hspell:%d|h[%s]|h|r", info.mountID, info.value))
+                else
+                    local link = GetSpellLink(info.value)
+                    if link then self.Tooltip:SetHyperlink(link) end
+                end
+            elseif info.action == 'macro' then
+                -- Optional: Show macro name/contents
+                self.Tooltip:SetText(info.value, 1, 1, 1)
+            end
+        else
+            -- If the slot is empty, hide the tooltip
+            self.Tooltip:Hide()
+        end
+        self:SetScript('OnUpdate', nil)
+    end
 end
 
 ----------------------------------
@@ -471,10 +490,10 @@ function ConsolePortRingButtonMixin:UpdateState()
 		local spellID = self:GetAttribute('spell')
 		if spellID then
 			local spellName = GetSpellInfo(spellID)
-			if(IsConsumableSpell(spellName)) then
-				self:SetCharges(GetSpellCount(spellName))
+			if(IsConsumableSpell and IsConsumableSpell(CPAPI.IsCustomClient() and spellID or spellName)) then
+				self:SetCharges(GetSpellCount(CPAPI.IsCustomClient() and spellID or spellName))
 			end
-			self:SetUsable(IsUsableSpell(spellName))
+			self:SetUsable(IsUsableSpell(CPAPI.IsCustomClient() and spellID or spellName))
 			self:SetCooldown(GetSpellCooldown(spellID))
 		end
 	elseif action == 'action' then
@@ -494,7 +513,8 @@ end
 -- Icon and quest icon
 ----------------------------------
 function ConsolePortRingButtonMixin:SetTexture(actionType, actionValue)
-	local texture, isQuest = TEXTURE_GETS[actionType](actionValue)
+	local mountID = self:GetAttribute("mountID")
+	local texture, isQuest = TEXTURE_GETS[actionType](mountID or actionValue)
 	if texture then
 		self.Icon.texture = texture
 		self.Icon:SetTexture(texture)		
@@ -549,7 +569,9 @@ function Utility:Disable()
 	self:SetAttribute('initialized', false)
 end
 
-function Utility:Refresh()
+function Utility:Refresh() 
+    if InCombatLockdown() then return end
+	
 	local size = self.HANDLE:GetIndexSize()
 	self:SetAttribute('size', size)
 	self:SetAttribute('fraction', rad(360 / size))
@@ -559,6 +581,15 @@ function Utility:Refresh()
 	self:Draw(size)
 
 	self:OnRefresh(size)
+end
+
+function Utility:UpdateVisuals() 
+    for _, button in ipairs(self.Buttons) do
+        if button:IsShown() then 
+            button:UpdateTexture() 
+            button:UpdateState()
+        end
+    end
 end
 
 ----------------------------------
@@ -830,29 +861,53 @@ Utility:SetAttribute('_onextrabar', [[
 -- Callbacks
 ---------------------------------------------------------------
 local function OnButtonContentChanged(self, actionType)
-	local activePreset = tonumber(Utility:GetAttribute("ActivePreset") or 1)
-    local preset = ConsolePortUtility[activePreset]
+    local activePresetID = tonumber(Utility:GetAttribute("ActivePreset") or 1)
+    local preset = ConsolePortUtility[activePresetID]
     if not preset.Data then
         preset.Data = {}
     end
 
+    -- 1. Update the Database (for SavedVariables)
+    local val = self:GetAttribute(actionType)
+    local cur = self:GetAttribute('cursorID')
+    local mnt = self:GetAttribute('mountID')
+    local aut = self:GetAttribute('autoassigned') 
+
     preset.Data[self:GetID()] = {
         action       = actionType,
-        value        = self:GetAttribute(actionType),
-        cursorID     = self:GetAttribute('cursorID'),
-        mountID      = self:GetAttribute('mountID'),
-        autoassigned = self:GetAttribute('autoassigned'),
+        value        = val,
+        cursorID     = cur,
+        mountID      = mnt,
+        autoassigned = aut,
     }
+
+    -- 2. Update the Prefix Cache (for the Secure Handler) 
+	if not InCombatLockdown() then
+		local prefix = "ring"..activePresetID.."-"
+		self:SetAttribute(prefix.."type", actionType)
+		self:SetAttribute(prefix.."id", val)
+		self:SetAttribute(prefix.."cursorID", cur)
+		self:SetAttribute(prefix.."mountID", mnt)
+	end
 
     self:UpdateState()
 end
 
 local function OnButtonContentRemoved(self) 
-	local activePreset = tonumber(Utility:GetAttribute("ActivePreset") or 1)
-    local preset = ConsolePortUtility[activePreset]
+    local activePresetID = tonumber(Utility:GetAttribute("ActivePreset") or 1)
+    local preset = ConsolePortUtility[activePresetID]
     if preset.Data then
         preset.Data[self:GetID()] = nil
     end
+
+    -- Clear the Prefix Cache
+	if not InCombatLockdown() then
+		local prefix = "ring"..activePresetID.."-"
+		self:SetAttribute(prefix.."type", nil)
+		self:SetAttribute(prefix.."id", nil)
+		self:SetAttribute(prefix.."cursorID", nil)
+		self:SetAttribute(prefix.."mountID", nil)
+	end
 end
 
 
@@ -889,6 +944,23 @@ end
 function Utility:OnRefresh(size)   
 	 -- Iterate through all buttons and reset them
     self:ClearButtons()
+
+	for presetID, preset in ipairs(ConsolePortUtility) do
+        if preset.Data then
+            for index, info in pairs(preset.Data) do
+                local actionButton = self.Buttons[index]
+                if actionButton and info.action then
+                    -- Store data with a ring-specific prefix
+                    local prefix = "ring"..presetID.."-"
+                    actionButton:SetAttribute(prefix.."type", info.action)
+                    actionButton:SetAttribute(prefix.."id", info.value)
+                    -- We also store cursor/mount IDs the same way
+                    actionButton:SetAttribute(prefix.."cursorID", info.cursorID)
+                    actionButton:SetAttribute(prefix.."mountID", info.mountID)
+                end
+            end
+        end
+    end
 
 	local activePreset = ConsolePortUtility[tonumber(Utility:GetAttribute("ActivePreset") or 1)]
     if not activePreset or not activePreset.Data then return end

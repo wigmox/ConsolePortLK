@@ -74,5 +74,6 @@ Frames\Flyout.lua
 Frames\Totem.lua
 Frames\Helper.lua
 Frames\Nameplate.lua
+Frames\PixelBridge.lua
 
 Plugins\Plugins.xml

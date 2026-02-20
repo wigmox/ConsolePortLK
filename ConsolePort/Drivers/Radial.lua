@@ -290,23 +290,45 @@ local ENV_RADIAL = {
 	]];
 	---------------------------------------------------------------
 	['_onuse'] = [[
-		local istoggled, button = ...
-		self:SetAttribute('toggled', istoggled)
+        local istoggled, button = ... 
+        self:SetAttribute('toggled', istoggled)
 
-		if(button) then 
-			self:SetAttribute('ActivePreset', button == "LeftButton" and 1 or button)
-		end
+        -- 1. Determine which preset we are opening
+        if istoggled and button then 
+            local newPreset = (button == "LeftButton") and 1 or tonumber(button) or button
+            self:SetAttribute('ActivePreset', newPreset)
+            
+            -- 2. "Hot-Swap" the attributes securely
+            local prefix = "ring"..newPreset.."-"
+            local size = self:GetAttribute('size') or 8
+            
+            for i=1, size do
+                local btn = self:GetFrameRef(tostring(i))
+                if btn then
+                    -- Move the prefixed data to the active slots
+                    local pType = btn:GetAttribute(prefix.."type")
+                    local pID   = btn:GetAttribute(prefix.."id")
+                    
+                    btn:SetAttribute("type", pType)
+                    -- Handle spell/item/macro types
+                    if pType then
+                        btn:SetAttribute(pType, pID)
+                    end
+                end
+            end
+			
+			control:CallMethod("UpdateVisuals")
+        end
 
-		if self:GetAttribute('toggled') then
-			control:RunFor(HANDLE, HANDLE:GetAttribute('hBind'), self:GetName())
-			self:Show()
-		else
-			control:RunFor(HANDLE, HANDLE:GetAttribute('hClear'), self:GetName())
-			self:Hide()
-			control:RunAttribute('_oncursor', nil)
-			wipe(BIT)
-		end
-	]];
+        -- 3. Standard Show/Hide Logic
+        if self:GetAttribute('toggled') then
+            control:RunFor(HANDLE, HANDLE:GetAttribute('hBind'), self:GetName())
+            self:Show()
+        else
+            control:RunFor(HANDLE, HANDLE:GetAttribute('hClear'), self:GetName())
+            self:Hide()
+        end
+    ]],
 	---------------------------------------------------------------
 	['_oncursor'] = [[
 		local hasItem = ...

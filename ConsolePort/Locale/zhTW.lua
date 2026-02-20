@@ -134,6 +134,7 @@ TUTORIAL = {
 		AUTOLOOT 			= '戰鬥中強制自動拾取',
 		AUTOSELL 			= '自動出售垃圾物品',
 		DISABLEBINDHELP 	= '禁用動作放置輔助',
+		ENABLEPIXELBRIDGE 	= '啟用像素橋（實驗性）',
 		FIXES 				= '修復',
 		DISABLEHOLDREPEAT 	= '一對一介面游標',
 		SKIPCALIBRATION		= '登入時禁用校準檢查',
@@ -165,7 +166,7 @@ TUTORIAL = {
 		LEFT 				= '左',
 		RIGHT 				= '右',
 		-----------------------------------------------------------
-		LINK_WM 			= 'GitHub 上的 WoWmapper',
+		LINK_WM 			= 'GitHub 上的 WoWpadX',
 		LINK_CP 			= 'ConsolePort 網站',
 		LINK_PAYPAL			= 'Paypal 捐款',
 	},

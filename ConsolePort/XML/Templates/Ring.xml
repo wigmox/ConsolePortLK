@@ -92,7 +92,7 @@
 	</Button>
 
 	<Button name="ConsolePortRingTemplate" virtual="true" registerForClicks="LeftButtonDown,LeftButtonUp"
-		mixin="ConsolePortRingMixin" inherits="SecureHandlerStateTemplate, SecureHandlerShowHideTemplate, SecureActionButtonTemplate">
+		mixin="ConsolePortRingMixin" inherits="SecureHandlerStateTemplate, SecureHandlerShowHideTemplate, SecureUnitButtonTemplate">
 		<Frames>
 			<GameTooltip name="$parentTooltip" parentKey="Tooltip" inherits="GameTooltipTemplate">
 				<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background.blp" edgeFile="Interface\AddOns\ConsolePort\Textures\Window\EdgefileBig.blp" tile="false">

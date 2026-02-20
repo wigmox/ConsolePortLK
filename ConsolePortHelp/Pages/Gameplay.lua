@@ -307,7 +307,7 @@ Help:AddPage('Interacting with the world', 'Gameplay', [[<HTML><BODY>
 		interacting with mouseover will also interact with your current target without aiming at it. This can be useful for interaction with things you're already targeting,
 		without having to aim directly at them a second time. Without a target, this binding behaves exactly as a right click.
 	</p>
-</BODY></HTML>]])
+</BODY></HTML>]]) 
 
 --[==[
 

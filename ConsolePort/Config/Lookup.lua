@@ -245,7 +245,9 @@ function ConsolePort:GetActionPageResponse()
         if HasVehicleActionBar and HasVehicleActionBar() then
             newstate = GetVehicleBarIndex()
         elseif HasOverrideActionBar and HasOverrideActionBar() then
-            newstate = GetOverrideBarIndex()
+            if GetOverrideBarIndex then
+                newstate = GetOverrideBarIndex()
+            end
         elseif HasTempShapeshiftActionBar and HasTempShapeshiftActionBar() then
             newstate = GetTempShapeshiftBarIndex()
         elseif GetBonusBarOffset() > 0 then
@@ -269,7 +271,9 @@ function ConsolePort:GetActionPage()
     elseif HasVehicleActionBar and HasVehicleActionBar() then
         newstate = GetVehicleBarIndex()
     elseif HasOverrideActionBar and HasOverrideActionBar() then
-        newstate = GetOverrideBarIndex()
+        if GetOverrideBarIndex then
+            newstate = GetOverrideBarIndex()
+        end
     elseif HasTempShapeshiftActionBar and HasTempShapeshiftActionBar() then
         newstate = GetTempShapeshiftBarIndex()
     elseif GetBonusBarOffset() > 0 then
@@ -762,6 +766,7 @@ local cvars = { -- value = default
     disableCvarReset        = {false    ; 'Disable console variable reset on exit/logout'};
     disableHints            = {false    ; 'Disable hint display on how certain things work'};
     disableSmartBind        = {false    ; 'Disable action/bag placement helper'};
+    enablePixelBridge       = {false    ; 'Enable Pixel Bridge (experimental)'};
     disableSmartMouse       = {false    ; 'Disable smart cursor show/hide'};
     disableStickMouse       = {false    ; 'Disable override bindings for stick buttons'};
     doubleModTap            = {true     ; 'Toggle mouselook by double tapping a modifier'};

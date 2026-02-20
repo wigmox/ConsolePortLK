@@ -17,7 +17,7 @@ Help:AddPage('Controller', nil, [[<HTML><BODY>
 		<a href="slash:/consoleport recalibrate">Click here to recalibrate your controller.</a>
 	</H2><br/>
 	<p align="left">
-		<a href="page:WoWmapper">|cff69ccf0WoWmapper|r</a> is recommended for any type of Xbox controller and DualShock 4 controllers on Windows.
+		<a href="page:WoWpadX">|cff69ccf0WoWpadX|r</a> is recommended for any type of controller on Windows.
 		The controller layout you choose to use in-game is merely a graphical preference.
 	</p>
 	<IMG src="Interface\AddOns\ConsolePortHelp\Textures\CtrlSplash" align="center" width="768" height="384"/>
@@ -36,7 +36,7 @@ Help:AddPage('Changing modifiers', 'Controller', [[<HTML><BODY>
 	<p align="left">
 		In order to change your modifiers, you'll need to swap them both in-game and in your input mapper. The in-game configuration is purely graphical, and has no effect on your bindings.
 		<br/><br/>
-		If you're using <a href="page:WoWmapper">|cff69ccf0WoWmapper|r</a>, enabling ConsolePort sync will export any changes in your WoWmapper profile automatically and prompt an interface reload to apply the new settings. Sync is recommended to ensure any changes you make match your in-game settings.
+		If you're using <a href="page:WoWpadX">|cff69ccf0WoWpadX|r</a>, enabling ConsolePort sync will export any changes in your WoWpadX profile automatically and prompt an interface reload to apply the new settings. Sync is recommended to ensure any changes you make match your in-game settings.
 	</p><br/>
 	<H1 align="center">
 		Recommended settings
@@ -94,128 +94,215 @@ Help:AddPage('Custom profiles', 'Controller', [[<HTML><BODY>
 
 
 
-Help:AddPage('Steam controller', 'Controller', [[<HTML><BODY>
+Help:AddPage('Steam controllers', 'Controller', [[<HTML><BODY>
 	<H1 align="center">
-		Steam controller setup
+		Steam controllers setup
 	</H1><br/>
 	<p align="left">
-		1. <a href="website:https://cdn.discordapp.com/attachments/221698189567197184/379927518603378709/ConsolePort_Official.vdf">|cff69ccf0Download the Steam controller profile for ConsolePort.|r</a>
-	</p>
-	<p align="left">
-		2. Place the downloaded file in |cffffccf0[steam folder]/controller_base/template|r.<br/>
-		3. Start Steam and open big picture mode.<br/>
-		4. Go to Settings, Controller, Base Configurations, Desktop Configuration.<br/>
-		5. Click on Browse Configs and then go to Templates.<br/>
-		6. Import |cffffccf0ConsolePort Official|r from the list.<br/>
-		7. Go back to Settings, Features, Steam Overlay.<br/>
-		8. Disable Steam overlay to avoid conflicting key bindings.<br/>
-		9. Exit big picture mode and start WoW using the regular launcher.<br/><br/>
-		Note: You can also add WoW64.exe (or WoW.exe on 32-bit operating systems) as a non-steam game and use the profile specifically for WoW. 
-		However, this requires you to start WoW separately from your Battle.net launcher and log in to the game manually every time you use your controller. 
+		Due to how non-steam games are added it may be difficult to find a proper configuration for this plugin.
+Create a new configuration and set the keys to the following: 
 	</p><br/>
-	<IMG src="Interface\AddOns\ConsolePortHelp\Textures\Steam" align="center" width="686" height="343"/>
+	<IMG src="Interface\AddOns\ConsolePortHelp\Textures\Deck" align="center" width="500" height="250"/>
+	<IMG src="Interface\AddOns\ConsolePortHelp\Textures\Steam" align="center" width="500" height="250"/>
 </BODY></HTML>]])
 
 
 
-
-if IsMacClient() then -- Show options on Mac clients
 Help:AddPage('Mac OS options', 'Controller', [[<HTML><BODY>
-	<H1 align="center">
-		Mac OS options
-	</H1><br/>
-	<p align="left">
-		Unfortunately, there are currently no tailored solutions to map your controller on macOS, but there is software to achieve similar results.
-		By following the instructions on <a href="page:Custom profiles">|cff69ccf0how to create custom profiles|r</a>, you can still use ConsolePort on your system.
-		<br/><br/>
-		Note that installing and setting up an input mapper on macOS can be a rather technical endeavour. Using Boot Camp to install Windows on your computer might be the best option if you want full compatibility.
-	</p><br/>
-	<H2 align="left">
-		Steam controller:
-	</H2>
-	<p align="left">
-		1. Follow the instructions on the <a href="page:Steam controller">|cff69ccf0Steam controller instructions page|r</a>.<br/>
-		2. Change the modifier bindings in the profile to generic keys, since the modifiers in the Steam client do not work in WoW on macOS.<br/>
-		3. Use Karabiner or Karabiner-Elements to remap the generic keys on your Steam controller to output Shift and Ctrl respectively.
-	</p><br/>
-	<H2 align="left">
-		Other controllers:
-	</H2>
-	<p align="left">
-		For any other controller, it's recommended to use either Joystick Mapper or ControllerMate.
-		<br/><br/>
-		Joystick Mapper is free and provides a rudimentary interface to remap your controller. It's the most convenient choice to use if it supports your controller.
-		<br/><br/>
-		ControllerMate is a verbose piece of software that allows you to program your controller by linking together logic structures and keyboard bindings.
-		If you're looking for a powerful solution that can be tailored to your own needs, ControllerMate is your best option.
-		<br/><br/>
-		Even though ControllerMate is very flexible, it's also technically challenging to set up. Since it's also not free, it's not recommended to use this solution unless you have the technical skill to do so.
-	</p>
+    <H1 align="center">
+        Mac OS options
+    </H1><br/>
+    <p align="left">
+        Running a 32-bit legacy game like 3.3.5a on modern macOS requires a compatibility layer, as macOS no longer supports 32-bit applications natively. 
+        <br/><br/>
+        The most efficient way to use ConsolePort and |cFFFF6600WoWpadX|r on Mac (both Intel and Apple Silicon/M-series) is through a Windows compatibility layer. This allows you to run the Windows version of the game and the mapper side-by-side.
+    </p><br/>
+
+    <H2 align="left">
+        The Recommended Way: Wine / Whisky
+    </H2>
+    <p align="left">
+        For both |cff69ccf0Apple Silicon (M1/M2/M3)|r and |cff69ccf0Intel Macs|r, using a Wine wrapper is the gold standard. It allows the Windows version of WoWpadX to communicate with the game.
+        <br/><br/>
+        1. Download |cFFFF6600Whisky|r (Open Source) or |cFFFF6600CrossOver|r.<br/>
+        2. Create a new "Bottle" (Windows 10/11 64-bit).<br/>
+        3. Place your WoW 3.3.5a folder inside the bottle's C: drive.<br/>
+        4. Run |cFFFF6600WoWpadX.exe|r inside the same bottle as the game. This ensures the mapper can "see" the game window and the Pixel Bridge beacon.
+        <br/><br/>
+        |cffff269bNote:|r On Apple Silicon, macOS will automatically use Rosetta 2 to translate the instructions. Performance is usually near-native.
+    </p><br/>
+
+    <H2 align="left">
+        Native Mapping (Alternative)
+    </H2>
+    <p align="left">
+        If you are using a native Mac client (legacy systems only) or prefer native remappers, your options are:
+        <br/><br/>
+        |cff69ccf0• GameController Mapper:|r Available on the App Store. Modern, lightweight, and supports M-series chips natively. Highly recommended for simple remapping.<br/>
+        |cff69ccf0• Steam:|r You can add WoW as a "Non-Steam Game." Steam's Input Mapper is powerful, but you must use |cFFFF6600Karabiner-Elements|r to fix modifier keys (Shift/Ctrl) as Steam often struggles to pass them to WoW on macOS.
+    </p><br/>
+
+    <H2 align="left">
+        Legacy Options
+    </H2>
+    <p align="left">
+        |cff69ccf0• Joystick Mapper:|r Good for older Intel Macs, but lacks the advanced features needed for smooth Pixel Bridge integration.<br/>
+        |cff69ccf0• ControllerMate:|r Effectively discontinued. Does not support modern macOS versions or ARM architecture. Avoid on newer systems.
+    </p>
+</BODY></HTML>]]) 
+
+Help:AddPage('Linux options', 'Controller', [[<HTML><BODY>
+    <H1 align="center">
+        Linux options
+    </H1><br/>
+    <p align="left">
+        If you want to test ConsolePort with the new experimental feature called |cFFFF6600Pixel Bridge|r, It's recommended running the Windows version of |cFFFF6600WoWpadX|r directly through the same compatibility layer as your game.
+    </p><br/>
+
+    <H2 align="left">
+        The Recommended Way: Steam / Proton
+    </H2>
+    <p align="left">
+        If you use |cff69ccf0Steam|r or a |cff69ccf0Steam Deck|r, this is the easiest method:
+        <br/><br/>
+        1. Add |cFFFF6600Wow.exe|r as a Non-Steam Game.<br/>
+        2. In the game's |cff69ccf0Properties > Compatibility|r, force a specific version (Proton 9.0 or GE-Proton is recommended).<br/>
+        3. To run the mapper, use a launch command that opens both the game and |cFFFF6600WoWpadX.exe|r in the same "prefix". This ensures the mapper can see the game window.
+    </p><br/>
+
+    <H2 align="left">
+        The Advanced Way: Lutris / Bottles
+    </H2>
+    <p align="left">
+        If you prefer |cff69ccf0Lutris|r or |cff69ccf0Bottles|r:
+        <br/><br/>
+        1. Create a 64-bit Wine prefix (even for 32-bit WoW, as it provides better modern library support).<br/>
+        2. Use the |cff69ccf0"Run EXE inside Prefix"|r feature to launch WoWpadX.exe.<br/>
+        3. Ensure |cff69ccf0Gamescope|r is disabled if the mapper cannot find the window, as it can sometimes hide the Pixel Bridge beacon from external processes.
+    </p><br/>
+
+    <H2 align="left">
+        ARM Linux (Raspberry Pi / Tablets / Phones)
+    </H2>
+    <p align="left">
+        Running on ARM Linux (like a Raspberry Pi 5) is possible using |cFFFF6600Box86|r and |cFFFF6600Wine|r. 
+        <br/><br/>
+        You can also run on Android devices using Winlator or GameHub, though these platforms may introduce input latency and compatibility issues with WoWpadX.
+    </p><br/>
+
+    <H2 align="left">
+        Native Alternative
+    </H2>
+    <p align="left">
+		|cff69ccf0• Steam Input:|r An incredibly powerful tool built directly into the Steam client. It supports almost every controller and allows for advanced features like radial menus, action sets, and the latest 2026 circular response curves. It is the gold standard for handheld users.<br/><br/>
+        |cff69ccf0• AntiMicroX:|r The modern standard for Linux controller mapping. It is highly powerful and supports Wayland. While it doesn't support the Pixel Bridge natively, it is one of the best native tool for general controller-to-keyboard mapping on Linux.
+    </p>
 </BODY></HTML>]])
-end
 
 
 
 
--- WoWmapper description page
-Help:AddPage('WoWmapper', 'Controller', [[<HTML><BODY>
-	<IMG src="Interface\AddOns\ConsolePort\Textures\Logos\WM" align="center" width="128" height="128"/>
-	<br/><br/><br/><br/><br/><br/>
-	<H1 align="center">
-		What is WoWmapper?
-	</H1><br/>
-	<p align="left">
-		WoWmapper is an input mapper for ConsolePort, aimed at bringing true controller functionality to World of Warcraft.
-		Its primary purpose is to handle DualShock 4 or Xbox/Xinput controller input and convert it into button presses and mouse movements which are then sent to WoW and processed by ConsolePort.
-	</p>
-	<br/>
-	<H1 align="center">
-		What do I need?
-	</H1><br/>
-	<p align="left">
-		|cff69ccf0•|r A system running Windows 7, 8, 10 or higher<br/>
-		|cff69ccf0•|r DirectX 9 or DirectX 10<br/>
-		|cff69ccf0•|r Microsoft .NET Framework 4.5.2<br/>
-		|cff69ccf0•|r A DualShock 4 or Xbox/Xinput compatible controller<br/>
-		|cff69ccf0•|r World of Warcraft retail edition (WoWmapper does not support unofficial clients)
-	</p><br/>
-	<H3 align="left">
-		Before you download WoWmapper, please ensure that you have updated DirectX to the latest version available for your system, and that you meet the other requirements for running the application.
-	</H3><br/>
-	<H2 align="center">
-		<a href="website:https://github.com/topher-au/WoWmapper/releases/latest">Click here to get a link to the latest release of WoWmapper.</a>
-	</H2> 
+-- WoWpadX description page
+Help:AddPage('WoWpadX', 'Controller', [[<HTML><BODY>
+    <IMG src="Interface\AddOns\ConsolePort\Textures\Logos\WP" align="center" width="128" height="128"/>
+    <br/><br/><br/><br/><br/><br/>
+    <H1 align="center">
+        What is WoWpadX?
+    </H1><br/>
+    <p align="left">
+        |cFFFF6600WoWpadX|r is a high-performance, native input mapper for ConsolePortLK. 
+        Built with C++ and Qt6, it leverages the cutting-edge |cFFFF6600SDL3|r library with the goal to provide the lowest latency possible.
+        <br/><br/>
+        Its primary purpose is to convert modern controller input into standard keyboard and mouse events, enabling true console-style gameplay without the overhead of older .NET frameworks as used by it's predecessor WoWmapperX.
+    </p>
+    <br/>
+    <H1 align="center">
+        What do I need?
+    </H1><br/>
+    <p align="left">
+        |cff69ccf0•|r A system running Windows 10, 11, or Linux (via Wine)<br/>
+        |cff69ccf0•|r Microsoft Visual C++ Redistributable 2015-2022<br/>
+        |cff69ccf0•|r Any controller supported by SDL3 (DualSense, Xbox, Switch, etc.)<br/>
+        |cff69ccf0•|r World of Warcraft 3.3.5a or newer
+    </p><br/>
+    <H3 align="left">
+			Unlike its predecessor, WoWpadX is a **standalone native application**. It does not require complex system-wide runtimes like .NET Framework, meaning it runs exactly as shipped without interfering with your Windows installation.    </H3><br/>
+    <H2 align="center">
+        <a href="website:https://github.com/leoaviana/WoWpadX/releases/latest">Click here to get a link to the latest release of WoWpadX.</a>
+    </H2> 
 </BODY></HTML>]])
 
 
+Help:AddPage('Supported devices', 'WoWpadX', [[<HTML><BODY>
+    <IMG src="Interface\AddOns\ConsolePort\Textures\Logos\WP" align="center" width="128" height="128"/>
+    <br/><br/><br/><br/><br/><br/>
+    <H1 align="center">
+        Supported devices
+    </H1><br/>
+    <p align="left">
+        WoWpadX features near-universal controller support thanks to the |cFFFF6600SDL3 Gamepad API|r. 
+        Most devices are recognized automatically without any third-party software like X360CE or DS4Windows.
+    </p><br/>
+    <H2 align="left">
+        Natively Supported:
+    </H2>
+    <p align="left">
+        |cff69ccf0•|r |cFFFFFFFFPlayStation:|r DualSense, DualSense Edge, DualShock 4, and DS3<br/>
+        |cff69ccf0•|r |cFFFFFFFFXbox:|r Series X|S, Xbox One, Elite Series 1 &amp; 2, and Xbox 360<br/>
+        |cff69ccf0•|r |cFFFFFFFFNintendo:|r Switch Pro Controller and Joy-Cons<br/>
+        |cff69ccf0•|r |cFFFFFFFFHandhelds:|r Steam Deck, ROG Ally, and Lenovo Legion Go<br/>
+        |cff69ccf0•|r |cFFFFFFFFOther:|r 8BitDo, Logitech, Razer, and generic HID gamepads
+    </p><br/>
+    <H2 align="left">
+        Advanced Features
+    </H2>
+    <p align="left">
+        |cff69ccf0•|r |cFFFFFFFFLow Latency:|r Native C++ execution ensures your inputs reach the game instantly.<br/>
+        |cff69ccf0•|r |cFFFFFFFFHotplugging:|r Connect or disconnect your controller while the game is running.<br/>
+        |cff69ccf0•|r |cFFFFFFFFHaptic Sync:|r Integrated with the |cFFFF6600Pixel Bridge|r for health-based vibrations and movement awareness.
+    </p><br/> 
+    <p align="left">
+        If your controller is not recognized, ensure it is in "X-Input" mode if it has a physical switch. Most modern Bluetooth controllers will "just work" the moment they are paired.
+    </p>
+</BODY></HTML>]])
 
 
-Help:AddPage('Supported devices', 'WoWmapper', [[<HTML><BODY>
-	<IMG src="Interface\AddOns\ConsolePort\Textures\Logos\WM" align="center" width="128" height="128"/>
-	<br/><br/><br/><br/><br/><br/>
-	<H1 align="center">
-		Supported devices
-	</H1><br/>
-	<p align="left">
-		WoWmapper supports a range of different devices, although some will require an extra layer of abstraction to be recognized. For this purpose, another software called X360CE can be used in conjunction with WoWmapper to mimic an Xbox 360 device, so you'll still be able to enjoy WoWmapper's easy configuration and rich extra features.
-	</p><br/>
-	<H2 align="left">
-		Natively supported:
-	</H2>
-	<p align="left">
-		|cff69ccf0•|r DualSense |TInterface\AddOns\ConsolePortHelp\Textures\Bluetooth:16:16:0:0|t<br/>
-		|cff69ccf0•|r DualSense Edge |TInterface\AddOns\ConsolePortHelp\Textures\Bluetooth:16:16:0:0|t<br/>
-		|cff69ccf0•|r DualShock 4 Pro |TInterface\AddOns\ConsolePortHelp\Textures\Bluetooth:16:16:0:0|t<br/>
-		|cff69ccf0•|r DualShock 4 Standard |TInterface\AddOns\ConsolePortHelp\Textures\Bluetooth:16:16:0:0|t<br/>
-		|cff69ccf0•|r Xbox One Controller |TInterface\AddOns\ConsolePortHelp\Textures\Bluetooth:16:16:0:0|t<br/>
-		|cff69ccf0•|r Xbox One Elite Controller |TInterface\AddOns\ConsolePortHelp\Textures\Bluetooth:16:16:0:0|t<br/>
-		|cff69ccf0•|r Xbox 360 Wireless Controller |TInterface\AddOns\ConsolePortHelp\Textures\Bluetooth:16:16:0:0|t<br/>
-		|cff69ccf0•|r Xbox 360 Wired Controller<br/>
-	</p><br/>
-	<p align="left">
-		If your controller is not on this list, you can test it anyway but if it does not work, you probably should use x360ce.
-	</p><br/> 
-	<H2 align="center">
-		<a href="website:https://github.com/seblindfors/ConsolePort/wiki">Click here to get a link to the support article on how to setup X360CE with WoWmapper.</a>
-	</H2> 
+Help:AddPage('Pixel Bridge', 'WoWmapper', [[<HTML><BODY>
+    <H1 align="center">
+        Pixel Bridge
+    </H1><br/>
+    <p align="left">
+        The |cFFFF6600Pixel Bridge|r is an experimental synchronization system designed to close the gap between the game client and WoWpadX.
+        <br/><br/>
+        By encoding your character's real-time state into tiny, unnoticeable pixels in the corner of your screen, ConsolePort can communicate useful information to WoWpadX without the need for intrusive memory reading.
+    </p><br/>
+    <H2 align="left">
+        What does it enable?
+    </H2>
+    <p align="left">
+        While ConsolePort handles the interface, the Pixel Bridge provides the external mapper with "eyes" inside the game world. This enables some QoL features in WoWpadX such as:
+        <br/><br/>
+        |cff69ccf0• Precise Haptic Feedback:|r Your controller can vibrate or change LED colors based on your actual health percentage.<br/>
+        |cff69ccf0• Adaptive Movement:|r The system can automatically detect if your character is walking or running, adjusting stick sensitivity on the fly for smoother navigation.<br/>
+        |cff69ccf0• Combat Awareness:|r External overlays or rumble effects can trigger the moment you enter combat or start targeting a spell reticle.<br/>
+        |cff69ccf0• Intelligent Mouselook:|r Prevents "ghost" cursor movements by instantly syncing the camera toggle state between the game and your sticks.
+    </p><br/>
+    <H2 align="left">
+        How to use it
+    </H2>
+    <p align="left">
+        To activate the bridge, go to the <a href="run:ConsolePortOldConfig:OpenCategory('Config')">|cff69ccf0Settings|r</a> menu and check |cFFFF6600Enable Pixel Bridge|r.
+        <br/><br/>
+        Once enabled, you will notice a tiny (8x1 pixel) flickering magenta block in the top-left corner of your screen. This is the "Beacon" that your controller software uses to lock onto the game window. 
+        <br/><br/>
+        |cffff269bNote:|r For the bridge to work, the top-left corner of your game window must be visible and not obscured by other applications (like Discord overlays or web browsers).
+    </p><br/>
+    <H2 align="left">
+        Performance and Safety
+    </H2>
+    <p align="left">
+        The Pixel Bridge is entirely passive. It does not modify game files, read protected memory, or interact with the server in any way. It simply displays a few colored pixels, making it the safest way to achieve advanced haptic integration.
+        <br/><br/>
+        In terms of performance, the impact is effectively zero. It takes less processing power than showing a single icon on your action bar.
+    </p>
 </BODY></HTML>]])
