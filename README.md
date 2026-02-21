@@ -24,8 +24,7 @@ in order to let you play the game on a controller - without inconvenience.
 <br/><br/>
 Consisting of several modules, ConsolePortLK is a fully-fledged solution to handling all the quirks in a game where gamepad support was not intended,
 including interface navigation, custom-tailored UI elements to assist in gameplay. You will need a controller mapping software to use this AddOn.
-the original project used a app called WoWmapper which already did the mapping automatically, I basically forked and updated WoWmapper
-to have a better integration with the Wrath of the Lich King (3.3.5a) client using it's older memory reading functions and increase controller compatibility, however it's not required, you can use any controller mapping software.
+the original project used a app called WoWmapper which already did the mapping automatically, I completely rewrote it and launched WoWpadX. A SDL3 based keyboard mapping software made to have a better integration with the Wrath of the Lich King (3.3.5a) and controller compatibility, however it's not mandatory to have it, you can use any controller mapping software.
 
 ## Screenshots:
 
@@ -56,8 +55,8 @@ to have a better integration with the Wrath of the Lich King (3.3.5a) client usi
 1. Download **[Latest Version](https://github.com/leoaviana/ConsolePortLK/releases/latest)**
 2. Unpack the Zip file
 3. Copy (or drag and drop) all of the extracted folders (ConsolePort, ConsolePortBar, etc.) into your Wow-Directory\Interface\AddOns
-4. Download **[WoWmapperX](https://github.com/leoaviana/WoWmapperX)**
-5. Start WoWmapperX and connect your controller.
+4. Download **[WoWpadX](https://github.com/leoaviana/WoWpadX)**
+5. Start WoWpadX and connect your controller.
 5. Restart WoW
 
 ## Commands:
@@ -95,6 +94,6 @@ ConsolePortLK has only been made taking in consideration default WoW API for 3.3
 If somehow it doesn't work for you in a customized client, don't expect fast changes in this AddOn just to support it unless someone with enough interest send pull requests fixing these issues when they happen, because customized clients can be a moving target and may get new modifications that break old stuff.
 
 ### I am unable to find the configuration profile in Steam ###
-Due to how non-steam games are added it may be difficult to find a proper configuration for this plugin.  
-Create a new configuration and set the keys to the following:
+Due to how non-steam games are added it may be difficult to find a proper preset created for this addOn.  
+If **[WoWpadX](https://github.com/leoaviana/WoWpadX)** is not working for you, you can create a new preset and set the keys to the following:
 <img width="1275" height="680" alt="image" src="https://github.com/user-attachments/assets/4d0e2ea8-a0e2-4b9f-9665-a74579e94944" />
