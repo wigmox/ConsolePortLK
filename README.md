@@ -4,9 +4,6 @@ This AddOn is the backported version of [ConsolePort](https://github.com/seblind
 
 Beware that the World of Warcraft 3.3.5a client is old and it's no longer supported, this project has been created only for learning purposes (Lua programming).<br/><br/>
 
-I have ported it long time ago and never released, now I'm finally sharing what I was able to do. It may not have complete ConsolePort 1.9.17 functionality parity due to missing functions in the old client Lua API implementation but I believe it is in an usable state, but it has not been extensively tested (raids, instances, battlegrounds)
-so there might be bugs but I believe I've fixed most if not all game breaking bugs.
-
 ## Differences between ConsolePortLK vs ConsolePort 1.9.17
 
 1. ConsolePortLK is a port to work on a World of Warcraft Lua API older than it supports (WoW 3.3.5a 12340).
@@ -22,9 +19,10 @@ This project is not affiliated in anyway with the original project, please do no
 ConsolePortLK is an interface add-on for World of Warcraft that will give you a handful of nifty features
 in order to let you play the game on a controller - without inconvenience.
 <br/><br/>
+
 Consisting of several modules, ConsolePortLK is a fully-fledged solution to handling all the quirks in a game where gamepad support was not intended,
 including interface navigation, custom-tailored UI elements to assist in gameplay. You will need a controller mapping software to use this AddOn.
-the original project used a app called WoWmapper which already did the mapping automatically, I completely rewrote it and launched WoWpadX. A SDL3 based keyboard mapping software made to have a better integration with the Wrath of the Lich King (3.3.5a) and controller compatibility, however it's not mandatory to have it, you can use any controller mapping software.
+the original project used a app called WoWmapper which already did the mapping automatically, I completely rewrote it and launched **[WoWpadX](https://github.com/leoaviana/WoWpadX)**. A SDL3 based keyboard mapping software made to have a better integration with the Wrath of the Lich King (3.3.5a) and controller compatibility, however it's not mandatory to have it, you can use any controller mapping software.
 
 ## Screenshots:
 
