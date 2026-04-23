@@ -91,7 +91,33 @@ ConsolePortLK has only been made taking in consideration default WoW API for 3.3
 
 If somehow it doesn't work for you in a customized client, don't expect fast changes in this AddOn just to support it unless someone with enough interest send pull requests fixing these issues when they happen, because customized clients can be a moving target and may get new modifications that break old stuff.
 
-### I am unable to find the configuration profile in Steam ###
-Due to how non-steam games are added it may be difficult to find a proper preset created for this addOn.  
-If **[WoWpadX](https://github.com/leoaviana/WoWpadX)** is not working for you, you can create a new preset and set the keys to the following:
-<img width="1275" height="680" alt="image" src="https://github.com/user-attachments/assets/4d0e2ea8-a0e2-4b9f-9665-a74579e94944" />
+### WoWpadX is not recognizing WoW as a running process: 
+Due to how non-steam games are added, or how Proton compatibility works, it may be difficult to get WoWPadX working as intended on Steam/Steam deck/SteamOS. If this is the case, try each option until one works for you.
+
+Before you try the follow, make sure WoWpadX and the WoW.exe are on the same Proton compatability setting (or Wine Prefix). You may have to try different settings until both work on the same Proton/Wine prefix setting.
+
+#### 1) WoWPadX Launch Options Command Line
+
+With WoWpadX as non steam game, go to properties of the game and find the `Launch Options` dialog, and put the command line argument -l and specify the path of the wow executable, it should launch the executable in the same prefix and recognize it immediately.
+
+Example Usage: `WoWpadX.exe -l "/Path/To/WoW.exe"`. If this option does not work, try the next.
+
+#### 2) WoW.exe Launch Options
+
+Go to the properties of your added non steam game for the WoW executable. In the `Launch Options`, add this:
+
+`PROTON_REMOTE_DEBUG_CMD="/Absolute Path/To Your WoWPadX Executable/here" %command%`
+
+Exampel Usage: `PROTON_REMOTE_DEBUG_CMD="/home/deck/Games/WoW/3.3.5a/WoW.exe" %command%`
+
+#### 3) Steam Game Controller Layout
+
+If non of the above options work, this is the last resort.
+
+- Name your WoW game `World of Warcraft: WotLK` in Steam.
+- Go to Controller Layout: In Template, Community or Search and look for the template: `Gamepad leoaviana ConsolePortLK` by Prrg.
+
+If the layout is not showing up, make sure to select `Show All Layouts`. and look for it again.
+
+Apply the layout.
+
